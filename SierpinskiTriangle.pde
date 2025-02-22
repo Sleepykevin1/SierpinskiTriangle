@@ -1,40 +1,26 @@
-public void setup()
-{
-size(400,400);
- background(255);
-}
-public void draw()
-{
-}
-public void mouseDragged()//optional
-{
-  sierpinski((int)(Math.random()*400),(int)(Math.random()*400),(int)(Math.random()*255));
+int depth = 0;
 
+void setup() {
+  size(400, 400);
+  background(240);
 }
 
+void draw() {
+  background(240);
+  sierpinski(100, 300, 200, depth);
+}
 
 void mousePressed() {
-  if (mouseButton == LEFT) {
-   sierpinski((int)(Math.random()*400),(int)(Math.random()*400),(int)(Math.random()*255));
-  } else if (mouseButton == RIGHT) {
-    background(255);
-  }
+  depth = (depth + 1) % 7; // Cycles from 0 to 6
 }
-public void sierpinski(int x, int y, int len) 
-{
-  
-  if(len <= 20) {
-   fill((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
-   triangle(x,y,x+len,y,x+len/2,y-len); 
 
+void sierpinski(int x, int y, int len, int level) {
+  if (level == 0) {
+    triangle(x, y, x + len, y, x + len / 2, y - len);
+  } else {
+    len /= 2;
+    sierpinski(x, y, len, level - 1);
+    sierpinski(x + len, y, len, level - 1);
+    sierpinski(x + len / 2, y - len, len, level - 1);
   }
-  
-  else{
-   sierpinski(x,y,len/2);
-    sierpinski(x+len/2,y,len/2);
-    sierpinski(x+len/4,y-len/2,len/2);
-  
-  
-  }
-
 }
